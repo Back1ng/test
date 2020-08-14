@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <?php
+        foreach ($branches as $branch) {
+            echo $branch->name;
+            echo "<button class='button' name='".$branch->id."'>Подробнее</button><br>";
+        }
+    ?>
+
+    <div id="about"></div>
+</body>
+<script src="js/jquery-3.5.1.min.js"></script>
+<script>
+    $(".button").click(function() {
+        $.ajax({
+            type: "POST",
+            url:  "/details",
+            data: "branchID="+$(this).attr('name'),
+            success: function (result) {
+                $("#about").html(result);
+            }
+        });
+    });
+</script>
+</html>
