@@ -4,7 +4,7 @@
 namespace App\Database;
 
 
-class DatabaseConfigurationDirector
+class DatabaseConfigurationDirector implements DatabaseConfigurationDirectorInterface
 {
     private DatabaseConfigurationBuilderInterface $builder;
 
@@ -13,7 +13,8 @@ class DatabaseConfigurationDirector
         $this->builder = $builder;
     }
 
-    public function build($driver, $databaseName, $host, $username, $password) : DatabaseConfigurationBuilderInterface
+    public function build(string $driver, string $databaseName,
+                          string $host, string $username, string $password) : DatabaseConfigurationBuilderInterface
     {
         $this->builder->setDriver($driver);
         $this->builder->setDatabaseName($databaseName);
