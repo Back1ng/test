@@ -9,17 +9,13 @@ class DB
     /**
      * Creates a connection.
      *
-     * @param Configuration $configuration
+     * @param DatabaseConfigurationBuilderInterface $configuration
      */
-    public function __construct(Configuration $configuration)
+    public function __construct()
     {
-        $this->connection = new \PDO(
-            $configuration->getDriver() .
-            ":host=" . $configuration->getHost() .
-            ";dbname=" . $configuration->getDBName(),
-            $configuration->getUsername(),
-            $configuration->getPassword()
-        );
+        $director = new DatabaseConfigurationDirector(new DatabaseConfigurationBuilder());
+        $configuration = $director->build("mysql", "testovoe", "localhost", "root", "");
+        $this->connection = new \PDO($configuration->getDsn(), $configuration->getUsername(), $configuration->getPassword());
     }
 
     /**
